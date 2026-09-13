@@ -1,0 +1,9 @@
+Deployment Process
+
+All production deployments go through the CI/CD pipeline defined in the platform repository. Engineers must open a pull request, get at least one approving review, and pass all automated tests before merging to main. Merges to main automatically trigger a staging deployment.
+
+Promotion from staging to production requires a manual approval step in the deployment dashboard. Only engineers with the "release-manager" role can approve production promotions. Deployments are done using a blue-green strategy: the new version is deployed alongside the old one, traffic is shifted gradually over 15 minutes, and the old version is kept warm for one hour in case a rollback is needed.
+
+Rollbacks can be triggered from the deployment dashboard with a single click and typically complete within 3 minutes. Any deployment that causes the error rate to exceed 2% for more than 5 minutes is automatically rolled back by the monitoring system without requiring human intervention.
+
+Emergency hotfixes may bypass the standard review process only with sign-off from an engineering manager, and must be followed by a retroactive PR review within 24 hours.

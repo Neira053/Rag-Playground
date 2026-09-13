@@ -1,0 +1,9 @@
+Coding Standards
+
+All backend services are written in either Python or TypeScript. Python services must use type hints on all public function signatures and pass mypy in strict mode as part of CI. TypeScript services must have strict mode enabled in tsconfig.json.
+
+Every pull request must include unit tests for new logic; PRs that decrease overall test coverage will be blocked by CI. Code reviews should focus on correctness, security implications, and readability rather than style, since formatting is enforced automatically by pre-commit hooks (black and prettier).
+
+Secrets, API keys, and credentials must never be committed to the repository. Use the secrets manager integration for all credentials, and rotate any credential that is accidentally committed immediately, even if the commit is later removed from history.
+
+Functions should do one thing. If a function requires more than three levels of nested conditionals, it should be refactored. Public APIs should be documented with docstrings describing parameters, return values, and possible exceptions.

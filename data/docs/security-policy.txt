@@ -1,0 +1,9 @@
+Security Policy
+
+All employees must complete security awareness training within their first week and annually thereafter. Access to production systems requires multi-factor authentication; SMS-based MFA is not permitted for production access, only authenticator apps or hardware security keys.
+
+Access to customer data follows the principle of least privilege. Engineers are granted access only to the systems required for their current project, and access is automatically revoked after 90 days of inactivity or immediately upon role change. All access grants and revocations are logged and reviewed quarterly by the security team.
+
+Any suspected security incident, including phishing attempts, must be reported to the security team immediately through the dedicated security channel, not through regular support tickets. Security vulnerabilities discovered in production must be triaged within 24 hours: critical vulnerabilities require a patch within 48 hours, high severity within 7 days, and medium severity within 30 days.
+
+Third-party vendors that will have access to customer data must pass a security review and sign a data processing agreement before integration.

@@ -1,0 +1,7 @@
+On-Call Policy
+
+Engineers join the on-call rotation after completing at least two months on their team and shadowing one full on-call rotation with a mentor. Each on-call shift lasts one week, and engineers are compensated with on-call pay plus a day off in lieu if they are paged outside business hours more than three times during the shift.
+
+The on-call engineer is responsible for triaging all pages, responding to customer-impacting alerts, and maintaining the on-call runbook. Non-urgent issues found during on-call should be filed as tickets rather than fixed immediately, to avoid scope creep during the shift.
+
+Engineers can request an on-call swap with another qualified engineer at least 48 hours in advance by posting in the on-call channel. Swaps within 48 hours require manager approval. No engineer should be on-call for more than two consecutive weeks except in cases of team short-staffing, which requires director approval.

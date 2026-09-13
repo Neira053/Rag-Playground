@@ -1,0 +1,9 @@
+Incident Response Policy
+
+When a production incident is detected, the on-call engineer is paged automatically via the alerting system. The on-call engineer must acknowledge the page within 5 minutes and begin investigation. If the on-call engineer cannot resolve the issue within 15 minutes, they must escalate to the secondary on-call and open an incident channel.
+
+Incidents are classified into three severities. Severity 1 (SEV1) means a full outage or data loss risk affecting all customers, and requires immediate escalation to the engineering director and a public status page update within 10 minutes. Severity 2 (SEV2) means significant degradation affecting a subset of customers. Severity 3 (SEV3) means a minor issue with a workaround available.
+
+After any SEV1 or SEV2 incident, the incident commander must schedule a blameless postmortem within 3 business days. The postmortem document must include a timeline, root cause, customer impact, and at least three concrete action items with owners and due dates.
+
+All incidents, regardless of severity, must be logged in the incident tracker with start time, resolution time, and a short summary.

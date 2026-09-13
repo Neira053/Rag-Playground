@@ -1,0 +1,22 @@
+# --- Secrets ---
+.env
+*.key
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# --- Project data / generated at runtime ---
+data/index.pkl
+*.log
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

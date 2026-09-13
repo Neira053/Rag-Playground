@@ -1,0 +1,16 @@
+[
+  {"query": "How long does an on-call engineer have to acknowledge a page?", "expected_doc_id": "incident-response"},
+  {"query": "What multi-factor authentication methods are allowed for production access?", "expected_doc_id": "security-policy"},
+  {"query": "How does the blue-green deployment strategy shift traffic?", "expected_doc_id": "deployment-process"},
+  {"query": "Do pull requests need unit tests before merging?", "expected_doc_id": "coding-standards"},
+  {"query": "How far in advance do I need to request an on-call swap?", "expected_doc_id": "on-call-policy"},
+  {"query": "What happens if a deployment causes a high error rate?", "expected_doc_id": "deployment-process"},
+  {"query": "How quickly must a critical security vulnerability be patched?", "expected_doc_id": "security-policy"},
+  {"query": "When must a blameless postmortem be scheduled?", "expected_doc_id": "incident-response"},
+  {"query": "If something breaks badly in prod, who do I need to tell and how fast?", "expected_doc_id": "incident-response"},
+  {"query": "Can I text-message-verify into a prod server?", "expected_doc_id": "security-policy"},
+  {"query": "What's the review bar before code ships to customers?", "expected_doc_id": "coding-standards"},
+  {"query": "What's the best recipe for a chocolate souffle?", "expected_doc_id": null},
+  {"query": "Who won the last World Cup?", "expected_doc_id": null},
+  {"query": "What's my company's parental leave policy?", "expected_doc_id": null}
+]
