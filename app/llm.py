@@ -32,6 +32,7 @@ class LLMResult:
     text: str
     input_tokens: int
     output_tokens: int
+    success: bool = True
 
 
 class LLMTransientError(Exception):
@@ -69,12 +70,18 @@ def _mock_answer(query: str, context_chunks: List[str]) -> LLMResult:
 )
 def _call_gemini(prompt: str) -> LLMResult:
     try:
-                resp = _client.models.generate_content(
+        resp = _client.models.generate_content(
             model=settings.GEMINI_MODEL,
             contents=prompt,
-            config={"max_output_tokens": settings.LLM_MAX_TOKENS},
+            config={
+                "max_output_tokens": settings.LLM_MAX_TOKENS,
+                "thinking_config": {"thinking_level": "MINIMAL"},  # Gemini 3 models default to
+                # deep "thinking" which eats into max_output_tokens and can truncate the visible
+                # answer. This is a direct doc-grounded QA task, not a reasoning task, so we
+                # keep thinking minimal. (Gemini 3 uses thinking_level, not the older
+                # thinking_budget field from Gemini 2.5 — sending the wrong one 400s.)
+            },
         )
-                
     except Exception as e:  # noqa: BLE001 — google-genai raises several transient error types
         raise LLMTransientError(str(e)) from e
 
@@ -99,6 +106,7 @@ def generate(query: str, context_chunks: List[str]) -> Tuple[LLMResult, float]:
                 text="The model is temporarily unavailable after retrying — please try again shortly.",
                 input_tokens=0,
                 output_tokens=0,
+                success=False,
             )
     elapsed = time.perf_counter() - start
     return result, elapsed

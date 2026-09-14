@@ -6,7 +6,7 @@ load_dotenv()
 
 class Settings:
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
     MOCK_MODE: bool = GEMINI_API_KEY == ""  # graceful degradation, no key needed for a demo run
 
     REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -19,7 +19,7 @@ class Settings:
     # some barely-related chunk instead of honestly finding nothing.
     MIN_RETRIEVAL_SCORE: float = float(os.getenv("MIN_RETRIEVAL_SCORE", "0.05"))
 
-    LLM_TIMEOUT_SECONDS: float = float(os.getenv("LLM_TIMEOUT_SECONDS", "8.0"))
+    LLM_TIMEOUT_SECONDS: float = float(os.getenv("LLM_TIMEOUT_SECONDS", "15.0"))  # Gemini rejects deadlines < 10s
     LLM_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "2"))
     LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "500"))
 
@@ -29,11 +29,12 @@ class Settings:
     API_KEY: str = os.getenv("PLAYGROUND_API_KEY", "demo-key-123")  # simple auth for this POC
 
     # Approx per-1M-token pricing used only for the cost estimate on the dashboard.
-    # Defaults match Gemini 2.5 Flash's paid-tier rate; if you're on the free
-    # tier (no billing enabled) your actual cost is $0 regardless of what the
-    # dashboard estimates — set both to 0 if you want the dashboard to reflect that.
-    PRICE_INPUT_PER_1M: float = float(os.getenv("PRICE_INPUT_PER_1M", "0.30"))
-    PRICE_OUTPUT_PER_1M: float = float(os.getenv("PRICE_OUTPUT_PER_1M", "2.50"))
+    # Defaults match Gemini 3.6 Flash's paid-tier rate (as of its July 2026 release);
+    # if you're on the free tier (no billing enabled) your actual cost is $0
+    # regardless of what the dashboard estimates — set both to 0 if you want
+    # the dashboard to reflect that.
+    PRICE_INPUT_PER_1M: float = float(os.getenv("PRICE_INPUT_PER_1M", "1.50"))
+    PRICE_OUTPUT_PER_1M: float = float(os.getenv("PRICE_OUTPUT_PER_1M", "7.50"))
 
     DOCS_DIR: str = os.getenv("DOCS_DIR", "data/docs")
     EVAL_SET_PATH: str = os.getenv("EVAL_SET_PATH", "data/eval_set.json")

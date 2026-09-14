@@ -112,6 +112,18 @@
     .connector{ display:none; }
   }
 
+  .pipeline-legend{
+    display:flex; flex-wrap:wrap; gap: 14px 20px;
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-soft);
+    font-size: 11.5px; color: var(--dim);
+  }
+  .pipeline-legend span{ display:flex; align-items:center; gap: 7px; }
+  .swatch{ width: 9px; height: 9px; border-radius: 3px; flex-shrink:0; display:inline-block; }
+  .swatch.pass{ background: var(--cyan); }
+  .swatch.hit{ background: var(--moss); }
+  .swatch.skip{ background: var(--dim-2); opacity: 0.5; }
+  .swatch.block{ background: var(--ember); }
+
   /* ---------- stat ticker ---------- */
   .ticker{
     display:flex; align-items:stretch; flex-wrap: wrap;
@@ -223,17 +235,23 @@
       <div class="connector" id="c-6"></div>
       <div class="node" id="n-answer"><div class="node-chip"><div class="node-label">Answer</div><div class="node-value">—</div></div></div>
     </div>
+    <div class="pipeline-legend">
+      <span><i class="swatch pass"></i>ran normally — value shown is time taken</span>
+      <span><i class="swatch hit"></i>cache hit — later stages skipped, answer served instantly</span>
+      <span><i class="swatch skip"></i>skipped this request</span>
+      <span><i class="swatch block"></i>stopped here — request blocked</span>
+    </div>
   </div>
 
   <div class="ticker" id="ticker">
-    <div class="tick hero"><div class="tick-label">Requests</div><div class="tick-value" id="s-requests">—</div></div>
-    <div class="tick"><div class="tick-label">Avg latency</div><div class="tick-value" id="s-latency">—</div></div>
-    <div class="tick"><div class="tick-label">Cache hit rate</div><div class="tick-value" id="s-cache">—</div></div>
-    <div class="tick"><div class="tick-label">Avg tokens</div><div class="tick-value" id="s-tokens">—</div></div>
-    <div class="tick"><div class="tick-label">Estimated cost</div><div class="tick-value" id="s-cost">—</div></div>
-    <div class="tick"><div class="tick-label">Error / block rate</div><div class="tick-value" id="s-error">—</div></div>
-    <div class="tick"><div class="tick-label">Recall@k</div><div class="tick-value" id="s-recall">run eval</div></div>
-    <div class="tick"><div class="tick-label">Mode</div><div class="tick-value" id="s-mode">—</div></div>
+    <div class="tick hero"><div class="tick-label" title="Total /ask calls handled since the server started">Requests</div><div class="tick-value" id="s-requests">—</div></div>
+    <div class="tick"><div class="tick-label" title="Average end-to-end time per request, from receiving the query to returning an answer">Avg latency</div><div class="tick-value" id="s-latency">—</div></div>
+    <div class="tick"><div class="tick-label" title="Percent of questions answered from a saved previous answer instead of running the full pipeline again">Cache hit rate</div><div class="tick-value" id="s-cache">—</div></div>
+    <div class="tick"><div class="tick-label" title="Average amount of text (in and out) processed per request — rough proxy for LLM cost per call">Avg tokens</div><div class="tick-value" id="s-tokens">—</div></div>
+    <div class="tick"><div class="tick-label" title="Approximate $ spent on LLM calls so far, based on token counts and per-token pricing">Estimated cost</div><div class="tick-value" id="s-cost">—</div></div>
+    <div class="tick"><div class="tick-label" title="Percent of requests that failed or were blocked by a guardrail">Error / block rate</div><div class="tick-value" id="s-error">—</div></div>
+    <div class="tick"><div class="tick-label" title="Retrieval accuracy: of the questions with a known correct source, what percent did the retriever actually find it for? Click 'Run eval' below to measure.">Recall@k</div><div class="tick-value" id="s-recall">run eval</div></div>
+    <div class="tick"><div class="tick-label" title="'live' = answers come from Gemini. 'mock' = no API key set, so stand-in answers are used to demo the pipeline for free">Mode</div><div class="tick-value" id="s-mode">—</div></div>
   </div>
 
   <div class="cols">
@@ -252,7 +270,7 @@
       <div class="panel-head">
         <div class="panel-title">Evaluation harness</div>
       </div>
-      <div class="panel-note">Runs the labeled retrieval set and scores recall@k.</div>
+      <div class="panel-note">Runs a small set of test questions with known correct answers, and checks how often retrieval actually finds the right one.</div>
       <button class="secondary" onclick="runEval()" style="margin-top:12px;">Run eval</button>
       <div id="evalBox"></div>
     </div>
@@ -265,7 +283,7 @@
     <div id="logBox"><div class="empty">Nothing logged yet — ask something above.</div></div>
   </div>
 
-  <div class="footer-note">Endpoints: POST /ask · GET /metrics · GET /trace/latest · POST /eval · POST /reindex</div>
+  <div class="footer-note">A small RAG pipeline, fully instrumented for cost, latency and accuracy — built as a hands-on LLMOps exercise. <span title="POST /ask · GET /metrics · GET /trace/latest · POST /eval · POST /reindex" style="border-bottom: 1px dotted var(--dim-2); cursor: help;">API endpoints ⓘ</span></div>
 </div>
 
 <script>

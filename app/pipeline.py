@@ -96,13 +96,14 @@ def run_pipeline(query: str) -> AskResponse:
     final_answer = output_check.redacted_text
     cost = estimate_cost(llm_result.input_tokens, llm_result.output_tokens)
 
-    cache.set(cache_key, {
-        "answer": final_answer,
-        "sources": [s.model_dump() for s in sources],
-        "input_tokens": llm_result.input_tokens,
-        "output_tokens": llm_result.output_tokens,
-        "cost_usd": cost,
-    })
+    if llm_result.success:
+        cache.set(cache_key, {
+            "answer": final_answer,
+            "sources": [s.model_dump() for s in sources],
+            "input_tokens": llm_result.input_tokens,
+            "output_tokens": llm_result.output_tokens,
+            "cost_usd": cost,
+        })
 
     _record(trace_id, query, False, False, None, timings,
             llm_result.input_tokens, llm_result.output_tokens, cost,
